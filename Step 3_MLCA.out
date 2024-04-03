@@ -1,0 +1,814 @@
+Mplus VERSION 8.9
+MUTHEN & MUTHEN
+10/10/2023  10:08 AM
+
+INPUT INSTRUCTIONS
+
+   TITLE: step1 multilevel
+    DATA: FILE IS mcla_stepwise_class2.dat;
+    VARIABLE:
+    NAMES = oldprob agedisp married trans work noknowhiv age sch poorwq hivstatus urban
+    edu  unprotectedsex partnerstatus  knowstatus  firstsxage  d3years  d12months
+    Eswatini Kenya Lesotho Malawi Namibia Tanzania Uganda
+    Zambia Zimbabwe  c1 c2 c3 c4 c5 c6 ch cl mjcjoint centroidid;
+    USEVARIABLES = agedisp married trans work noknowhiv centroidid ch;
+    CATEGORICAL = agedisp married trans work noknowhiv ;
+    AUXILIARY= age sch poorwq hivstatus urban edu unprotectedsex partnerstatus knowstatus
+    firstsxage  d3years  d12months Eswatini Kenya Lesotho Malawi Namibia Tanzania Uganda
+    Zambia Zimbabwe ;
+    ! CENSORED = ;
+    ! COUNT = ;
+    ! NOMINAL = ;
+    MISSING = all (-999);
+    CLUSTER =centroidid;
+    nominal=ch;
+    CLASSES = H(2) L(3);
+    WITHIN = L agedisp married trans work noknowhiv;
+    BETWEEN = ch H;
+    ANALYSIS:
+    mconv = 0.000001;
+    TYPE = TWOLEVEL MIXTURE;
+    ESTIMATOR = MLR;
+    STARTS = 5000 1000;
+    PROCESS=8(STARTS);
+    !  STARTS = 100 10;
+    !  STITERATIONS = 20;
+    MODEL:
+    %WITHIN%
+    %OVERALL%
+    %BETWEEN%
+    %OVERALL%
+    L ON H;
+    MODEL H:
+    %BETWEEN%
+    %H#1%
+    [ch#1@ 1.261];
+
+    %H#2%
+    [ch#1@ -1.106];
+
+
+    !%CL#4%
+    ![agedisp$1 married$1 trans$1 work$1 noknowhiv$1];
+    !OUTPUT: TECH10;
+    SAVEDATA:
+    !FILE IS mcla_stepwise.dat;
+    !SAVE IS CPROB;
+
+
+
+
+
+
+*** WARNING in VARIABLE command
+  Note that only the first 8 characters of variable names are used in the output.
+  Shorten variable names to avoid any confusion.
+*** WARNING
+  One or more individual-level variables have no variation within a
+  cluster for the following clusters.
+
+     Variable   Cluster IDs with no within-cluster variation
+
+      AGEDISP     22271 22774 22659 22460 22675 33321 44150 44137 44092 44171 44427 44290 44181
+                  44264 44372 55238 55014 55043 66229 77488 77355 77110 77358 77288 77481 88450
+                  88037 88117 88378 88385 88050 88274 88138 88078 88395 88287 88082 88030 88340
+                  88008 88003 88306 88058 88384 88455 88365 99497 99321 55400 22259 66443 11030
+                  77503 44241 66493 55078 66055 77389 11090 77474 22579 55215 44411 66115 44200
+                  88266 55302 55456 44297 88504 66099 22760 88407 66004 55222 55151 66315 22508
+                  88036 55106 22429 88074 44296 22028 88289 11249 55010 11254 22189 11236 88254
+                  22527 44168 11131 11153 88332 44428 11070 11185 88107 33185 88156 88225 33004
+                  44279 44417 88281 11170 44016 88410 88288 88045 44195 11280 44082 33311 88063
+                  22343 77396 88075 66373 88285 77397 77477 77120 77513 22227 88200 88380 77251
+                  55181 88325 33130 77008 88251 88439 77367 77299 55429 66223 66324 66308 44203
+                  66273 66208 44040 44180 77059 88053 66413 66369 44088 22445 66517 66119 66475
+                  77164 66220 66407 77423 88320 44084 77119 55416 22703 44393 66020 22219 77029
+                  77078 77443 77470 55159 99203 99010 66432 99182 99028 99346 77366 99086 99064
+                  77083 44382 99363 22361 66071 77152 66451 77006 99343 99375 99136 99082 77390
+                  44219 99452 99428 77260 66494 77255 99364 99153 66450 99090 77043 77307 77328
+                  77109 99173 66052 44037 99031 66252 99238 66043 99322 99340 55028 66509 99325
+                  77197 99476 44001 99299 44102 77139 66403 66412 77378 22440 77472 33228 66501
+                  99013 99305 66123 22018 44046 33175 66433 77051 22776 99329 22426 99196 66094
+                  33326 77097 77458 22621 66358 66118 44057 33245 66241 22743 77158 44166 77413
+                  66284 66371 66464 44095 22492 77092 44119 44183 77187 44121 66361 99352 55130
+                  66017 88272 99396 77170 77122 77449 88208 55292 88219 33363 66503 66193 77016
+                  88123 88018 99119 11261 99039 99050 11196 77153 44004 88291 55018 66171 88190
+                  66303 66015 55147 66005 55288 66490 66394 66033 66277 66102
+      MARRIED     22800 22063 11199 11160 77332 99120 11012 22408 22259 11030 77159 55078 66055
+                  77389 11090 77173 44242 66059 22579 22245 44411 66430 88266 55302 55226 88092
+                  55166 88500 44297 88504 88035 22760 88198 88407 55436 66004 55222 88100 55151
+                  66315 44492 88036 88402 55106 88257 88389 22429 88474 11066 88074 44296 22028
+                  88289 11249 22032 55090 88304 88339 44438 11254 88296 44480 88254 22527 55365
+                  88068 88501 44168 88196 11131 88202 33263 88127 88332 11067 88064 33061 11070
+                  11185 88125 88253 33185 88156 88368 11088 44481 88442 33004 44140 44279 44417
+                  88281 88109 11170 88268 88410 88024 77455 44285 88131 88045 44085 44195 77015
+                  88110 11280 22343 66373 88285 77165 77178 77397 77477 77513 33254 22227 88200
+                  88380 77251 77453 88165 55262 66192 88439 88183 77299 55429 66227 77182 66324
+                  66308 88424 66273 66208 66366 77485 44040 44180 77059 88053 22445 66517 66119
+                  66475 77186 77220 66407 77423 88320 44084 77119 55083 66372 55252 66020 22219
+                  77029 77048 77470 55159 99203 66432 99182 99028 77366 99330 99086 77238 66360
+                  77261 77083 44382 99363 22361 66071 77152 99101 99181 44412 99174 44305 99402
+                  99082 66114 99457 99206 77104 77027 44219 99452 99428 77151 22746 99397 66494
+                  99153 99253 99155 99090 33002 77043 77370 66009 77307 77109 99027 99398 66052
+                  44037 99031 55306 66252 99238 99322 99340 55028 77093 66509 99325 33309 55118
+                  99476 44001 99407 44102 66403 77378 99213 22363 66291 77472 33228 99305 99484
+                  66345 55261 66123 44284 99114 22018 44046 66433 77051 77031 99266 66129 22776
+                  99329 22765 22426 99196 99142 55084 66231 66094 33326 77097 77216 66358 66184
+                  22359 77067 44057 33245 66241 99427 22743 77158 77426 66284 33138 33405 66302
+                  44204 77115 44095 22492 33222 77365 66162 88217 66361 66187 55130 77409 77519
+                  77305 66017 77434 77457 77265 44144 44261 99396 77080 66200 77432 22563 66471
+                  44362 99106 88275 44176 88219 33363 88314 66503 77352 55142 77020 77446 88018
+                  99119 66310 66064 99039 99251 99050 22264 66149 11196 66146 44115 66496 44370
+                  77047 44319 66507 77050 99286 99167 77361 77199 66080 66013 66519 77508 66171
+                  77504 88190 66303 66434 66483 66015 77512 66431 55147 66497 44197 66490 66378
+                  88327 66104 66102 66428 66415 66272 66186 22056 66036 77146
+      TRANS       44008 88494 55400 66247 11012 22259 66443 11030 11204 55085 44224 77159 66493
+                  66055 77389 44273 22630 44242 66059 77090 22579 22245 55215 66430 66115 44200
+                  44451 88401 66461 55302 55226 55456 88092 55166 88500 88033 44297 88504 66099
+                  88035 22760 88098 55222 88100 55151 88341 88419 44332 88376 88402 55106 88257
+                  88389 22429 88474 11066 44296 22028 55358 88289 11249 55010 55090 88233 88304
+                  88339 11254 11236 88296 44480 44173 22527 55365 88068 88501 44168 88196 11131
+                  88202 33263 11153 88127 88332 11067 88064 22220 44428 33061 11070 88125 88107
+                  33185 88156 88368 66243 11088 88312 44481 55009 88442 33004 44140 44279 88109
+                  55019 11170 44016 88268 88288 33404 77455 44285 88131 88045 44085 44195 77015
+                  88110 88090 11280 44082 33311 88063 22343 22205 88075 66373 77397 55385 77120
+                  77513 33254 22227 88200 88380 77251 88165 55181 88325 33130 77008 88439 77367
+                  55429 77182 66324 55016 66308 44203 88424 88026 66273 66208 66366 77485 44040
+                  44180 66369 44088 22445 66119 66475 77164 66220 77220 66407 77423 44084 77119
+                  55083 55416 66372 55252 22219 77029 77443 88445 55159 99203 99010 66432 99182
+                  77035 99028 99346 77366 99330 99086 77238 66360 77261 99363 22361 66071 99101
+                  77452 99181 77006 22405 22049 44412 99174 99343 99440 99375 44305 99271 99416
+                  99136 99402 99082 66114 99457 99206 77104 99452 99428 99204 77450 77151 99397
+                  99004 66494 77255 99364 99153 99458 99253 99155 99090 33002 77370 66009 77307
+                  77109 33357 77145 99173 66052 44037 99031 66252 66043 77172 99340 77093 66509
+                  99325 33309 77197 55118 99476 44001 99407 66056 99070 44102 77139 77378 22440
+                  99213 22363 55282 66291 77472 66040 66068 99295 33228 66501 99013 66065 22251
+                  99305 99484 66345 66123 22171 44284 22018 44046 22192 33175 66433 77051 99266
+                  66129 22776 99329 22765 22426 99196 66452 55084 66231 66094 33326 77458 22621
+                  77216 66358 66118 44226 22359 44463 33245 33110 99427 22743 77158 66491 77426
+                  66284 33138 44240 66371 33405 66302 77345 77115 44095 33222 77092 88224 77365
+                  44183 99309 44121 66187 99352 66278 55130 77519 66017 77434 66006 66520 44144
+                  66089 77080 77170 66200 77432 77122 88132 77243 55440 22563 66471 99106 88275
+                  44176 88314 66374 66503 44019 66353 88123 88139 77446 88270 88018 44002 99119
+                  11261 66064 99039 55037 99050 22264 66149 77359 66019 11196 66146 44398 99409
+                  88381 99229 66507 99286 99167 88353 77361 66198 88291 55018 44421 77199 66080
+                  66519 77508 66171 66301 66283 44275 66303 66419 66434 77224 66483 66015 22789
+                  77494 66034 66431 66497 66414 88466 88120 55288 66490 66394 66378 88327 77279
+                  77483 66104 66053 66102 66428 66415 66272 66186 66036 66484 66101 66444 66307
+      WORK        66247 11012 22259 11204 77503 44241 55085 44224 77159 55078 66055 11090 44273
+                  22630 44242 77090 22579 22245 55215 44411 66430 22420 88115 66079 44451 88266
+                  88401 66461 88498 55226 88092 55166 88500 44297 88504 66099 88035 88198 88098
+                  88407 55436 55222 55151 44492 88419 44332 88376 88036 88402 55106 88257 88389
+                  22429 44296 22028 55358 88289 22032 55090 88233 88339 11254 22189 11236 88296
+                  44480 44173 88254 22527 88068 88501 44168 88196 88202 33263 11153 88127 88332
+                  11067 55223 22220 33061 11070 11185 88125 33185 88156 88225 88368 11088 88312
+                  44481 55009 33004 44140 88281 88109 55019 11170 44016 88259 88268 88410 88288
+                  33404 44285 88131 77015 44493 77437 11280 33311 22343 22205 77396 88075 66373
+                  88285 77165 77397 77477 77340 55385 77120 77513 33254 22227 77251 77453 55262
+                  55181 88325 77008 88251 66192 88439 77196 55429 66227 55016 44203 88424 88026
+                  66273 44180 66413 22445 88214 66517 66475 77186 66407 77269 77423 44084 77119
+                  55083 55416 66372 22703 44393 22219 77029 77078 77443 77470 55159 99203 99010
+                  77366 99330 99086 66360 99064 44382 99363 22361 99101 55350 77014 99181 77302
+                  22405 22049 44412 99174 99343 44305 99271 99416 99136 66114 99206 77027 99204
+                  77151 22746 99397 77260 99004 66494 99364 99153 44050 66450 99458 99253 99155
+                  99090 33002 77043 66009 77307 77109 33357 77145 99173 99398 55306 66252 99238
+                  66043 77172 99322 55028 77093 99325 33309 77197 55118 99476 44001 99407 99070
+                  99299 44102 77139 66412 77378 22440 22363 55282 66291 77472 77436 99295 33228
+                  66501 22251 99305 99484 66345 66169 22171 44284 99114 44046 22192 66433 77051
+                  77031 66129 22776 99329 22765 22426 99142 66452 55084 66231 66094 33326 77097
+                  77458 22621 77216 66118 66184 44226 44057 44463 33245 99427 22743 66491 44166
+                  66284 33138 66464 33405 66302 44204 77115 22492 33222 44119 88224 77365 88217
+                  44183 77064 44121 66187 99352 22380 55130 77519 77138 66017 77434 66006 77265
+                  44144 66209 77080 44035 66200 77176 77122 88132 77243 88208 22563 66047 66471
+                  77073 99106 88275 66503 44019 77352 66193 88123 88139 77446 44002 88502 11261
+                  55037 99251 99050 66149 77359 66019 11196 44115 44398 44004 44461 44370 77516
+                  99409 77047 44319 88381 77050 99286 44257 77361 44421 77024 77199 66080 66013
+                  99479 66161 66519 66263 66301 66283 88190 77224 66483 66015 66431 55147 66276
+                  66379 55288 44197 66490 66378 77483 66033 66277 66053 66428 77174 66272 88357
+                  66036 44254 66484 77063
+      NOKNOWHI    11028 66247 22408 66027 11204 77503 77326 55085 77159 66493 55078 66055 77389
+                  11090 22630 44242 77474 22579 22245 44411 66115 44200 88498 55456 55166 88500
+                  88033 88504 66099 88035 22760 88198 55436 66004 55222 88100 88341 88419 22508
+                  44332 88376 88402 55106 88257 88389 22429 88474 11066 88074 44296 22028 55358
+                  88289 55010 55090 88304 88339 44438 11254 22189 44480 44173 88254 22527 55277
+                  88501 44168 33263 11153 88127 88332 88064 55223 22220 44428 11185 88125 88107
+                  88368 66243 11088 44481 55009 88442 33004 44417 88242 88281 88109 88268 88410
+                  33404 88024 88131 44085 77015 88110 77437 11280 44082 22343 22205 88075 66373
+                  88285 77178 77397 77477 77340 55385 77120 33254 22227 88380 77251 33130 77008
+                  66192 88439 77196 77367 77299 55429 66227 77182 66223 66324 66308 44203 88424
+                  66273 66208 66366 44040 44180 77059 44088 22445 66517 77164 77220 66407 88320
+                  44084 66372 22703 66020 22219 77029 77078 77443 77048 77470 55159 99010 66432
+                  99028 77366 77362 99086 77238 99064 77261 77083 44382 99363 22361 66071 77452
+                  55350 99181 77006 22049 44412 99174 99375 44305 99416 99136 66114 99457 77104
+                  77027 44219 77151 99397 99004 99364 99153 77281 99155 66009 77328 77145 99173
+                  99027 99398 66052 55306 99238 22287 99322 77093 99325 33309 77197 55118 77074
+                  44001 99070 99299 77378 22440 22363 66291 77472 66040 77436 66068 99295 33228
+                  66501 99013 22251 99484 55261 22171 44284 66150 44046 33175 66433 77051 66129
+                  22776 99329 22426 99196 99142 66231 22621 66390 66358 22359 77067 44463 33245
+                  66241 66284 33138 44240 66371 77345 44204 44095 22492 77092 88224 66162 88217
+                  99309 77064 22380 66017 88272 77239 99396 77080 44035 66200 77176 77243 88208
+                  66047 55292 88275 66374 66503 77352 66193 88123 88018 77030 77171 88502 99039
+                  55037 22264 44398 44461 44370 99409 77198 99229 77050 99167 44257 88353 77361
+                  66198 55018 44421 22346 77199 99479 66519 88190 66303 77224 66483 66379 88466
+                  44197 66394 66378 77279 77483 77146 77280
+
+   2 WARNING(S) FOUND IN THE INPUT INSTRUCTIONS
+
+
+
+step1 multilevel
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                        2761
+
+Number of dependent variables                                    6
+Number of independent variables                                  0
+Number of continuous latent variables                            0
+Number of categorical latent variables                           2
+
+Observed dependent variables
+
+  Binary and ordered categorical (ordinal)
+   AGEDISP     MARRIED     TRANS       WORK        NOKNOWHI
+
+  Unordered categorical (nominal)
+   CH
+
+Observed auxiliary variables
+   AGE         SCH         POORWQ      HIVSTATUS   URBAN       EDU
+   UNPROTECTE  PARTNERSTA  KNOWSTATUS  FIRSTSXAGE  D3YEARS     D12MONTHS
+   ESWATINI    KENYA       LESOTHO     MALAWI      NAMIBIA     TANZANIA
+   UGANDA      ZAMBIA      ZIMBABWE
+
+Categorical latent variables
+   H           L
+
+Variables with special functions
+
+  Cluster variable      CENTROID
+
+  Within variables
+   AGEDISP     MARRIED     TRANS       WORK        NOKNOWHI
+
+  Between variables
+   CH
+
+
+Estimator                                                      MLR
+Information matrix                                        OBSERVED
+Optimization Specifications for the Quasi-Newton Algorithm for
+Continuous Outcomes
+  Maximum number of iterations                                 100
+  Convergence criterion                                  0.100D-05
+Optimization Specifications for the EM Algorithm
+  Maximum number of iterations                                 500
+  Convergence criteria
+    Loglikelihood change                                 0.100D-02
+    Relative loglikelihood change                        0.100D-05
+    Derivative                                           0.100D-05
+Optimization Specifications for the M step of the EM Algorithm for
+Categorical Latent variables
+  Number of M step iterations                                    1
+  M step convergence criterion                           0.100D-02
+  Basis for M step termination                           ITERATION
+Optimization Specifications for the M step of the EM Algorithm for
+Censored, Binary or Ordered Categorical (Ordinal), Unordered
+Categorical (Nominal) and Count Outcomes
+  Number of M step iterations                                    1
+  M step convergence criterion                           0.100D-02
+  Basis for M step termination                           ITERATION
+  Maximum value for logit thresholds                            15
+  Minimum value for logit thresholds                           -15
+  Minimum expected cell size for chi-square              0.100D-01
+Maximum number of iterations for H1                           2000
+Convergence criterion for H1                             0.100D-03
+Optimization algorithm                                         EMA
+Integration Specifications
+  Type                                                    STANDARD
+  Number of integration points                                  15
+  Dimensions of numerical integration                            0
+  Adaptive quadrature                                           ON
+Random Starts Specifications
+  Number of initial stage random starts                       5000
+  Number of final stage optimizations                         1000
+  Number of initial stage iterations                            10
+  Initial stage convergence criterion                    0.100D+01
+  Random starts scale                                    0.500D+01
+  Random seed for generating random starts                       0
+Parameterization                                             LOGIT
+Link                                                         LOGIT
+Cholesky                                                       OFF
+
+Input data file(s)
+  mcla_stepwise_class2.dat
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+     Number of missing data patterns             6
+     Number of y missing data patterns           0
+     Number of u missing data patterns           6
+     Number of clusters                       1816
+
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+
+     PROPORTION OF DATA PRESENT FOR U
+
+
+           Covariance Coverage
+              AGEDISP       MARRIED       TRANS         WORK          NOKNOWHI
+              ________      ________      ________      ________      ________
+ AGEDISP        0.960
+ MARRIED        0.957         0.997
+ TRANS          0.958         0.995         0.997
+ WORK           0.960         0.997         0.997         1.000
+ NOKNOWHI       0.959         0.996         0.996         0.998         0.999
+
+
+UNIVARIATE PROPORTIONS AND COUNTS FOR CATEGORICAL VARIABLES
+
+    AGEDISP
+      Category 1    0.466         1236.000
+      Category 2    0.534         1415.000
+    MARRIED
+      Category 1    0.394         1085.000
+      Category 2    0.606         1668.000
+    TRANS
+      Category 1    0.832         2291.000
+      Category 2    0.168          463.000
+    WORK
+      Category 1    0.227          626.000
+      Category 2    0.773         2134.000
+    NOKNOWHI
+      Category 1    0.551         1519.000
+      Category 2    0.449         1238.000
+    CH
+      Category 1    0.494          898.000
+      Category 2    0.506          918.000
+
+
+RANDOM STARTS RESULTS RANKED FROM THE BEST TO THE WORST LOGLIKELIHOOD VALUES
+
+Final stage loglikelihood values at local maxima, seeds, and initial stage start numbers:
+
+           -8974.031  607916           4323
+           -8974.031  690596           858
+           -8974.031  528938           1898
+           -8974.031  775884           639
+           -8974.031  664562           1138
+           -8974.031  258359           1202
+           -8974.031  84502            2288
+           -8974.031  939709           112
+           -8974.031  893618           4948
+           -8974.031  532095           2004
+           -8974.031  95624            1605
+           -8974.031  371072           3263
+           -8974.031  417600           1416
+           -8974.031  651352           3463
+           -8974.031  368364           4774
+           -8974.031  460407           2435
+           -8974.031  760898           3673
+           -8974.031  819788           4192
+           -8974.032  452297           1068
+           -8974.032  120855           2585
+           -8974.032  887848           4649
+           -8974.032  663189           3378
+           -8974.032  634762           4572
+           -8974.032  838944           3018
+           -8974.033  222603           4823
+           -8974.041  502974           1998
+           -8974.041  766178           1937
+           -8974.041  288571           2891
+           -8974.043  446528           3538
+           -8975.928  168000           3882
+           -8975.929  607642           1838
+           -8978.832  227563           63
+
+968 perturbed starting value run(s) did not converge or were rejected in the third stage.
+
+
+
+THE BEST LOGLIKELIHOOD VALUE HAS BEEN REPLICATED.  RERUN WITH AT LEAST TWICE THE
+RANDOM STARTS TO CHECK THAT THE BEST LOGLIKELIHOOD IS STILL OBTAINED AND REPLICATED.
+
+
+THE MODEL ESTIMATION TERMINATED NORMALLY
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                       35
+
+Loglikelihood
+
+          H0 Value                       -8974.031
+          H0 Scaling Correction Factor      1.0840
+            for MLR
+
+Information Criteria
+
+          Akaike (AIC)                   18018.062
+          Bayesian (BIC)                 18225.380
+          Sample-Size Adjusted BIC       18114.173
+            (n* = (n + 2) / 24)
+
+
+
+MODEL RESULTS USE THE LATENT CLASS VARIABLE ORDER
+
+   H  L
+
+
+FINAL CLASS COUNTS AND PROPORTIONS FOR THE LATENT CLASS PATTERNS
+BASED ON ESTIMATED POSTERIOR PROBABILITIES
+
+  Latent Class
+    Pattern
+
+    1  1        163.52308          0.05923
+    1  2        186.26780          0.06746
+    1  3       1047.26626          0.37931
+    2  1        877.68199          0.31789
+    2  2        112.01761          0.04057
+    2  3        374.24326          0.13555
+
+
+FINAL CLASS COUNTS AND PROPORTIONS FOR EACH LATENT CLASS VARIABLE
+BASED ON ESTIMATED POSTERIOR PROBABILITIES
+
+  Latent Class
+    Variable    Class
+
+    H              1      1397.05713          0.50600
+                   2      1363.94287          0.49400
+    L              1      1041.20508          0.37711
+                   2       298.28540          0.10804
+                   3      1421.50952          0.51485
+
+
+FINAL CLASS COUNTS AND PROPORTIONS FOR THE LATENT CLASS PATTERNS
+BASED ON THEIR MOST LIKELY LATENT CLASS PATTERN
+
+Class Counts and Proportions
+
+  Latent Class
+    Pattern
+
+    1  1              152          0.05505
+    1  2              215          0.07787
+    1  3             1047          0.37921
+    2  1              908          0.32887
+    2  2               32          0.01159
+    2  3              407          0.14741
+
+
+FINAL CLASS COUNTS AND PROPORTIONS FOR EACH LATENT CLASS VARIABLE
+BASED ON THEIR MOST LIKELY LATENT CLASS PATTERN
+
+  Latent Class
+    Variable    Class
+
+    H              1            1414          0.51213
+                   2            1347          0.48787
+    L              1            1060          0.38392
+                   2             247          0.08946
+                   3            1454          0.52662
+
+
+CLASSIFICATION QUALITY
+
+     Entropy                         0.802
+
+
+MODEL RESULTS
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+Within Level
+
+Latent Class Pattern 1 1
+
+ Thresholds
+    AGEDISP$1          0.914      0.240      3.812      0.000
+    MARRIED$1         15.000      0.000    999.000    999.000
+    TRANS$1           -0.260      0.200     -1.302      0.193
+    WORK$1            -0.658      0.211     -3.116      0.002
+    NOKNOWHI$1        -0.611      0.218     -2.806      0.005
+
+Latent Class Pattern 1 2
+
+ Thresholds
+    AGEDISP$1         -0.179      0.192     -0.932      0.351
+    MARRIED$1        -15.000      0.000    999.000    999.000
+    TRANS$1          -15.000      0.000    999.000    999.000
+    WORK$1            -0.598      0.982     -0.609      0.542
+    NOKNOWHI$1         0.491      0.326      1.509      0.131
+
+Latent Class Pattern 1 3
+
+ Thresholds
+    AGEDISP$1         -0.335      0.069     -4.882      0.000
+    MARRIED$1        -15.000      0.000    999.000    999.000
+    TRANS$1            3.834      6.710      0.571      0.568
+    WORK$1            -2.499      0.142    -17.572      0.000
+    NOKNOWHI$1         0.169      0.075      2.248      0.025
+
+Latent Class Pattern 2 1
+
+ Thresholds
+    AGEDISP$1          0.301      0.398      0.755      0.450
+    MARRIED$1          2.527      0.851      2.970      0.003
+    TRANS$1            1.892      0.355      5.330      0.000
+    WORK$1            -1.656      0.490     -3.382      0.001
+    NOKNOWHI$1         0.093      0.111      0.840      0.401
+
+Latent Class Pattern 2 2
+
+ Thresholds
+    AGEDISP$1         -2.088      3.983     -0.524      0.600
+    MARRIED$1         15.000      0.000    999.000    999.000
+    TRANS$1            0.644      1.049      0.614      0.539
+    WORK$1             0.670      3.116      0.215      0.830
+    NOKNOWHI$1         0.177      0.867      0.204      0.838
+
+Latent Class Pattern 2 3
+
+ Thresholds
+    AGEDISP$1         -0.573      0.172     -3.322      0.001
+    MARRIED$1        -15.000      0.000    999.000    999.000
+    TRANS$1            3.643      1.148      3.172      0.002
+    WORK$1             0.245      0.281      0.870      0.384
+    NOKNOWHI$1         0.823      0.144      5.706      0.000
+
+Between Level
+
+Latent Class Pattern 1 1
+
+ Means
+    CH#1               1.261      0.000    999.000    999.000
+
+Latent Class Pattern 1 2
+
+ Means
+    CH#1               1.261      0.000    999.000    999.000
+
+Latent Class Pattern 1 3
+
+ Means
+    CH#1               1.261      0.000    999.000    999.000
+
+Latent Class Pattern 2 1
+
+ Means
+    CH#1              -1.106      0.000    999.000    999.000
+
+Latent Class Pattern 2 2
+
+ Means
+    CH#1              -1.106      0.000    999.000    999.000
+
+Latent Class Pattern 2 3
+
+ Means
+    CH#1              -1.106      0.000    999.000    999.000
+
+Categorical Latent Variables
+
+Within Level
+
+ Intercepts
+    L#1                0.852      0.425      2.005      0.045
+    L#2               -1.206      2.201     -0.548      0.584
+
+Between Level
+
+ L#1        ON
+    H#1               -2.709      0.448     -6.043      0.000
+
+ L#2        ON
+    H#1               -0.521      2.389     -0.218      0.828
+
+ Means
+    H#1               -0.066      0.056     -1.162      0.245
+
+
+QUALITY OF NUMERICAL RESULTS
+
+     Condition Number for the Information Matrix              0.551E-04
+       (ratio of smallest to largest eigenvalue)
+
+
+C-SPECIFIC CLASSIFICATION RESULTS
+
+Classification Quality for H
+
+     Entropy                         0.727
+
+Average Latent Class Probabilities for Most Likely Latent Class Membership (Row)
+by Latent Class (Column)
+
+           1        2
+
+    1   0.936    0.064
+    2   0.055    0.945
+
+
+Classification Probabilities for the Most Likely Latent Class Membership (Column)
+by Latent Class (Row)
+
+           1        2
+
+    1   0.947    0.053
+    2   0.067    0.933
+
+
+Logits for the Classification Probabilities for the Most Likely Latent Class Membership (Column)
+by Latent Class (Row)
+
+              1        2
+
+    1      2.882    0.000
+    2     -2.638    0.000
+
+Classification Quality for L
+
+     Entropy                         0.825
+
+Average Latent Class Probabilities for Most Likely Latent Class Membership (Row)
+by Latent Class (Column)
+
+           1        2        3
+
+    1   0.914    0.085    0.001
+    2   0.055    0.837    0.108
+    3   0.041    0.001    0.958
+
+
+Classification Probabilities for the Most Likely Latent Class Membership (Column)
+by Latent Class (Row)
+
+           1        2        3
+
+    1   0.930    0.013    0.057
+    2   0.302    0.693    0.004
+    3   0.001    0.019    0.980
+
+
+Logits for the Classification Probabilities for the Most Likely Latent Class Membership (Column)
+by Latent Class (Row)
+
+              1        2        3
+
+    1      2.792   -1.483    0.000
+    2      4.219    5.050    0.000
+    3     -6.845   -3.954    0.000
+
+
+RESULTS IN PROBABILITY SCALE
+
+                    Estimate
+
+Within Level
+
+Latent Class Pattern 1 1
+
+ AGEDISP
+    Category 1         0.714
+    Category 2         0.286
+ MARRIED
+    Category 1         1.000
+    Category 2         0.000
+ TRANS
+    Category 1         0.435
+    Category 2         0.565
+ WORK
+    Category 1         0.341
+    Category 2         0.659
+ NOKNOWHIV
+    Category 1         0.352
+    Category 2         0.648
+
+Latent Class Pattern 1 2
+
+ AGEDISP
+    Category 1         0.455
+    Category 2         0.545
+ MARRIED
+    Category 1         0.000
+    Category 2         1.000
+ TRANS
+    Category 1         0.000
+    Category 2         1.000
+ WORK
+    Category 1         0.355
+    Category 2         0.645
+ NOKNOWHIV
+    Category 1         0.620
+    Category 2         0.380
+
+Latent Class Pattern 1 3
+
+ AGEDISP
+    Category 1         0.417
+    Category 2         0.583
+ MARRIED
+    Category 1         0.000
+    Category 2         1.000
+ TRANS
+    Category 1         0.979
+    Category 2         0.021
+ WORK
+    Category 1         0.076
+    Category 2         0.924
+ NOKNOWHIV
+    Category 1         0.542
+    Category 2         0.458
+
+Latent Class Pattern 2 1
+
+ AGEDISP
+    Category 1         0.575
+    Category 2         0.425
+ MARRIED
+    Category 1         0.926
+    Category 2         0.074
+ TRANS
+    Category 1         0.869
+    Category 2         0.131
+ WORK
+    Category 1         0.160
+    Category 2         0.840
+ NOKNOWHIV
+    Category 1         0.523
+    Category 2         0.477
+
+Latent Class Pattern 2 2
+
+ AGEDISP
+    Category 1         0.110
+    Category 2         0.890
+ MARRIED
+    Category 1         1.000
+    Category 2         0.000
+ TRANS
+    Category 1         0.656
+    Category 2         0.344
+ WORK
+    Category 1         0.661
+    Category 2         0.339
+ NOKNOWHIV
+    Category 1         0.544
+    Category 2         0.456
+
+Latent Class Pattern 2 3
+
+ AGEDISP
+    Category 1         0.361
+    Category 2         0.639
+ MARRIED
+    Category 1         0.000
+    Category 2         1.000
+ TRANS
+    Category 1         0.974
+    Category 2         0.026
+ WORK
+    Category 1         0.561
+    Category 2         0.439
+ NOKNOWHIV
+    Category 1         0.695
+    Category 2         0.305
+
+Between Level
+
+
+DIAGRAM INFORMATION
+
+  Mplus diagrams are currently not available for Mixture analysis.
+  No diagram output was produced.
+
+
+     Beginning Time:  10:08:51
+        Ending Time:  10:17:35
+       Elapsed Time:  00:08:44
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2023 Muthen & Muthen
