@@ -6,5 +6,5 @@ Step 1: identify the number of latent classes at level-1 (adolescent mothers). <
 Step 2: Identify number of latent classes at level-2 (communities). <br />
 Step 3: Confirm latent classes at level-1 given level-2's latent classes. <br />
 
-As a sensitive analysis,  I created typologies for adolescent mothers' sexual relationships ignoring the nested structure.
+As a sensitive analysis,  I created typologies for adolescent mothers' sexual relationships ignoring the nested structure (dissertation_LCA.Rmd).
 
